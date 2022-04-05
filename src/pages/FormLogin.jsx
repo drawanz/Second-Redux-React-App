@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import { thunkGetToken } from '../actions';
+import { saveNameAndEmail, thunkGetToken } from '../actions';
 
 class FormLogin extends Component {
   constructor() {
@@ -36,8 +36,10 @@ class FormLogin extends Component {
   }
 
   saveTokenAndExit = () => {
-    const { getToken, history } = this.props;
+    const { getToken, saveDataUser, history } = this.props;
+    const { name, email } = this.state;
     getToken();
+    saveDataUser(name, email);
     this.setState({
       name: '',
       email: '',
@@ -59,12 +61,14 @@ class FormLogin extends Component {
           data-testid="input-player-name"
           name="name"
           onChange={ this.changeForm }
+          placeholder="Nome"
         />
         <input
           type="email"
           data-testid="input-gravatar-email"
           name="email"
           onChange={ this.changeForm }
+          placeholder="Email"
         />
         <button
           type="button"
@@ -88,10 +92,12 @@ class FormLogin extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getToken: () => dispatch(thunkGetToken()),
+  saveDataUser: (name, email) => dispatch(saveNameAndEmail(name, email)),
 });
 
 FormLogin.propTypes = {
   getToken: propTypes.func,
+  saveDataUser: propTypes.func,
 }.isRequired;
 
 export default connect(null, mapDispatchToProps)(FormLogin);

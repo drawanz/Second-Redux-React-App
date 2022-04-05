@@ -38,7 +38,16 @@ class FormLogin extends Component {
   saveTokenAndExit = () => {
     const { getToken, history } = this.props;
     getToken();
-    history.push('/game');
+    this.setState({
+      name: '',
+      email: '',
+      isDisabled: true,
+    }, () => history.push('/game'));
+  }
+
+  goToConfig = () => {
+    const { history } = this.props;
+    history.push('/settings');
   }
 
   render() {
@@ -64,6 +73,13 @@ class FormLogin extends Component {
           onClick={ this.saveTokenAndExit }
         >
           Play
+        </button>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ this.goToConfig }
+        >
+          Configurações
         </button>
       </form>
     );

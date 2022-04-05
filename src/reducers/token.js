@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  tokenValue,
+  tokenValue: '',
 };
 
 const token = (state = INITIAL_STATE, action) => {

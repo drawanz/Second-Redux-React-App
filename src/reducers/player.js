@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
   name: '',
-  assertions,
-  score,
+  assertions: '',
+  score: '',
   gravatarEmail: '',
 };
 

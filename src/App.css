@@ -33,10 +33,10 @@
   min-height: 100vh;
 }
 
-#logo {
-  width: 100px;
+/* #logo {
   height: 100px;
-}
+  width: 100px;
+} */
 
 .App-link {
   color: #61dafb;

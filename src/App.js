@@ -1,16 +1,13 @@
-import React from 'react';
-import logo from './trivia.png';
-import './App.css';
+import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import FormLogin from './pages/FormLogin';
 
-export default function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          SUA VEZ
-        </p>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  render() {
+    return (
+      <Switch>
+        <Route exact path="/" component={ FormLogin } />
+      </Switch>
+    );
+  }
 }

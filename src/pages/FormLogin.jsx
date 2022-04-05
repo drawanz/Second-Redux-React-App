@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import propTypes from 'prop-types';
+import { thunkGetToken } from '../actions';
 
-export default class FormLogin extends Component {
+class FormLogin extends Component {
   constructor() {
     super();
 
@@ -32,12 +35,11 @@ export default class FormLogin extends Component {
     }
   }
 
-  // saveEmailAndExit = () => {
-  //   const { saveEmail, history } = this.props;
-  //   const { email } = this.state;
-  //   saveEmail(email);
-  //   history.push('/carteira');
-  // }
+  saveTokenAndExit = () => {
+    const { getToken, history } = this.props;
+    getToken();
+    history.push('/game');
+  }
 
   render() {
     const { isDisabled } = this.state;
@@ -59,7 +61,7 @@ export default class FormLogin extends Component {
           type="button"
           data-testid="btn-play"
           disabled={ isDisabled }
-          // onClick={ this.saveEmailAndExit }
+          onClick={ this.saveTokenAndExit }
         >
           Play
         </button>
@@ -67,3 +69,13 @@ export default class FormLogin extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  getToken: () => dispatch(thunkGetToken()),
+});
+
+FormLogin.propTypes = {
+  getToken: propTypes.func,
+}.isRequired;
+
+export default connect(null, mapDispatchToProps)(FormLogin);

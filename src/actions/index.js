@@ -21,8 +21,14 @@ export const actionGetTokenSucess = (token) => ({ type: GET_TOKEN_SUCESS, token 
 export const thunkGetToken = () => async (dispatch) => {
   dispatch(actionGetToken());
   const response = await fetch('https://opentdb.com/api_token.php?command=request');
-  const token = await response.json();
-  dispatch(actionGetTokenSucess(token));
+  const tokenObj = await response.json();
+  if (tokenObj.response_code === 0) {
+    dispatch(actionGetTokenSucess(tokenObj));
+  } else {
+    const newResponse = await fetch('https://opentdb.com/api_token.php?command=request');
+    const newTokenObj = await newResponse.json();
+    dispatch(actionGetTokenSucess(newTokenObj));
+  }
 };
 
 export const saveNameAndEmail = (name, email) => ({

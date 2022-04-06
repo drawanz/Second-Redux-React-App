@@ -35,10 +35,10 @@ class FormLogin extends Component {
     }
   }
 
-  saveTokenAndExit = () => {
+  saveTokenAndExit = async () => {
     const { getToken, saveDataUser, history } = this.props;
     const { name, email } = this.state;
-    getToken();
+    await getToken();
     saveDataUser(name, email);
     this.setState({
       name: '',

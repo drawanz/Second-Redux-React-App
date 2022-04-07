@@ -3,6 +3,8 @@ export const GET_TOKEN_SUCESS = 'GET_TOKEN_SUCESS';
 
 export const SAVE_NAME_AND_EMAIL = 'SAVE_NAME_AND_EMAIL';
 
+export const ADD_SCORE = 'ADD_SCORE';
+
 // export const GET_QUESTION = 'GET_QUESTION';
 
 // export const GET_QUESTION_SUCESS = 'GET_QUESTION_SUCESS';
@@ -10,6 +12,8 @@ export const SAVE_NAME_AND_EMAIL = 'SAVE_NAME_AND_EMAIL';
 export const actionGetToken = () => ({ type: GET_TOKEN });
 
 export const actionGetTokenSucess = (token) => ({ type: GET_TOKEN_SUCESS, token });
+
+export const addScore = (score) => ({ type: ADD_SCORE, score });
 
 // export const actionGetQuestion = () => ({ type: GET_QUESTION });
 

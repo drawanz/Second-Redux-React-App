@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Header from '../components/Header';
+import { addScore } from '../actions';
 import './Game.css';
 
 class Game extends Component {
@@ -28,11 +29,31 @@ class Game extends Component {
     this.setState({ questions: results });
   }
 
-  answerQuestion = () => {
-    this.setState({ isAnswered: true });
+  answerQuestion = (answer, difficulty) => {
+    // const { timer } = this.state;
+    const { addNewScore } = this.props;
+    const maxPoint = 3;
+    const tenOfTrybe = 10;
+    const difficultyScore = () => {
+      switch (difficulty) {
+      case 'hard':
+        return maxPoint;
+      case 'medium':
+        return 2;
+      case 'easy':
+        return 1;
+      default:
+        return 0;
+      }
+    };
+    let score = 0;
+    if (answer === 'right') {
+      score = tenOfTrybe + (1 * difficultyScore());
+    }
+    this.setState({ isAnswered: true }, () => addNewScore(score));
   }
 
-  createOptions = (correct, incorrectList, number) => {
+  createOptions = (correct, incorrectList, number, difficulty) => {
     const { isAnswered } = this.state;
     const array = [...incorrectList];
     array.splice(number, 0, correct);
@@ -47,7 +68,7 @@ class Game extends Component {
                 type="button"
                 data-testid="correct-answer"
                 className={ isAnswered ? 'correct-answer' : '' }
-                onClick={ this.answerQuestion }
+                onClick={ () => this.answerQuestion('right', difficulty) }
               >
                 { element }
               </button>
@@ -60,7 +81,7 @@ class Game extends Component {
               type="button"
               data-testid={ `wrong-answer-${i}` }
               className={ isAnswered ? 'wrong-answer' : '' }
-              onClick={ this.answerQuestion }
+              onClick={ () => this.answerQuestion('wrong', difficulty) }
             >
               { element }
             </button>
@@ -97,6 +118,7 @@ class Game extends Component {
           objQuestion.correct_answer,
           objQuestion.incorrect_answers,
           randomNumber,
+          objQuestion.difficulty,
         )}
         {isAnswered && (
           <button
@@ -130,8 +152,13 @@ const mapStateToProps = (state) => ({
   token: state.token,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  addNewScore: (score) => dispatch(addScore(score)),
+});
+
 Game.propTypes = {
   token: propTypes.string,
+  score: propTypes.func,
 }.isRequired;
 
-export default connect(mapStateToProps, null)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

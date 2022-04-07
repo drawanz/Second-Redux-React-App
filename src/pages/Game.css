@@ -1,0 +1,15 @@
+:root {
+
+  --incorrect-color: red;
+
+  --correct-color: rgb(6, 240, 15);
+
+}
+
+.wrong-answer {
+  border: 3px solid var(--incorrect-color);
+}
+
+.correct-answer {
+  border: 3px solid var(--correct-color);
+}

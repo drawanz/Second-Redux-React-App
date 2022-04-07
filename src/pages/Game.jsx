@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Header from '../components/Header';
+import './Game.css';
 
 class Game extends Component {
   constructor() {
@@ -10,6 +11,9 @@ class Game extends Component {
     this.state = {
       questions: '',
       index: 0,
+      isAnswered: false,
+      isGeneratingQuestion: true,
+      randomNumber: 0,
     };
   }
 
@@ -24,7 +28,12 @@ class Game extends Component {
     this.setState({ questions: results });
   }
 
+  answerQuestion = () => {
+    this.setState({ isAnswered: true });
+  }
+
   createOptions = (correct, incorrectList, number) => {
+    const { isAnswered } = this.state;
     const array = [...incorrectList];
     array.splice(number, 0, correct);
     let i = 0;
@@ -37,6 +46,8 @@ class Game extends Component {
                 key={ element }
                 type="button"
                 data-testid="correct-answer"
+                className={ isAnswered ? 'correct-answer' : '' }
+                onClick={ this.answerQuestion }
               >
                 { element }
               </button>
@@ -48,6 +59,8 @@ class Game extends Component {
               key={ element }
               type="button"
               data-testid={ `wrong-answer-${i}` }
+              className={ isAnswered ? 'wrong-answer' : '' }
+              onClick={ this.answerQuestion }
             >
               { element }
             </button>
@@ -57,14 +70,25 @@ class Game extends Component {
     );
   }
 
-  createQuestion = (objQuestion, index) => {
+  generateRandomNumber = (obj) => {
     let maxNumber = 0;
-    if (objQuestion.incorrect_answers.length === 1) {
+    if (obj.incorrect_answers.length === 1) {
       maxNumber = 1;
-    } if (objQuestion.incorrect_answers.length > 1) {
+    } if (obj.incorrect_answers.length > 1) {
       maxNumber = 2 + 1;
     }
     const randomNumber = Math.round(Math.random() * maxNumber);
+    this.setState({
+      isGeneratingQuestion: false,
+      randomNumber,
+    });
+  }
+
+  createQuestion = (objQuestion, index) => {
+    const { isGeneratingQuestion, randomNumber } = this.state;
+    if (isGeneratingQuestion) {
+      this.generateRandomNumber(objQuestion);
+    }
     return (
       <div key={ `Pergunta ${index + 1}` }>
         <h4 data-testid="question-category">{ objQuestion.category }</h4>
@@ -76,7 +100,11 @@ class Game extends Component {
         )}
         <button
           type="button"
-          onClick={ () => this.setState({ index: index + 1 }) }
+          onClick={ () => this.setState({
+            index: index + 1,
+            isAnswered: false,
+            isGeneratingQuestion: true,
+          }) }
         >
           Next
         </button>

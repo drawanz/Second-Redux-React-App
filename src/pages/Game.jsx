@@ -125,37 +125,43 @@ class Game extends Component {
 
   createQuestion = (objQuestion, index) => {
     const { isGeneratingQuestion, randomNumber, isAnswered } = this.state;
-    if (isGeneratingQuestion) {
-      this.generateRandomNumber(objQuestion);
-      this.setState({ time: 30 }, () => this.counter());
+    const { history } = this.props;
+    const maxIndex = 4;
+    if (index > maxIndex) {
+      history.push('/feedback');
+    } else {
+      if (isGeneratingQuestion) {
+        this.generateRandomNumber(objQuestion);
+        this.setState({ time: 30 }, () => this.counter());
+      }
+      return (
+        <div key={ `Pergunta ${index + 1}` }>
+          <h4 data-testid="question-category">{ objQuestion.category }</h4>
+          <p data-testid="question-text">{ objQuestion.question }</p>
+          {this.createOptions(
+            objQuestion.correct_answer,
+            objQuestion.incorrect_answers,
+            randomNumber,
+            objQuestion.difficulty,
+          )}
+          {isAnswered && (
+            <button
+              type="button"
+              data-testid="btn-next"
+              onClick={ () => this.setState({
+                index: index + 1,
+                isAnswered: false,
+                isGeneratingQuestion: true,
+                allOptionsDisabled: false,
+                time: 30,
+              }) }
+            >
+              Next
+            </button>
+          )}
+        </div>
+      );
     }
-    return (
-      <div key={ `Pergunta ${index + 1}` }>
-        <h4 data-testid="question-category">{ objQuestion.category }</h4>
-        <p data-testid="question-text">{ objQuestion.question }</p>
-        {this.createOptions(
-          objQuestion.correct_answer,
-          objQuestion.incorrect_answers,
-          randomNumber,
-          objQuestion.difficulty,
-        )}
-        {isAnswered && (
-          <button
-            type="button"
-            data-testid="btn-next"
-            onClick={ () => this.setState({
-              index: index + 1,
-              isAnswered: false,
-              isGeneratingQuestion: true,
-              allOptionsDisabled: false,
-              time: 30,
-            }) }
-          >
-            Next
-          </button>
-        )}
-      </div>
-    );
   }
 
   render() {

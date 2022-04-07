@@ -85,7 +85,7 @@ class Game extends Component {
   }
 
   createQuestion = (objQuestion, index) => {
-    const { isGeneratingQuestion, randomNumber } = this.state;
+    const { isGeneratingQuestion, randomNumber, isAnswered } = this.state;
     if (isGeneratingQuestion) {
       this.generateRandomNumber(objQuestion);
     }
@@ -98,16 +98,19 @@ class Game extends Component {
           objQuestion.incorrect_answers,
           randomNumber,
         )}
-        <button
-          type="button"
-          onClick={ () => this.setState({
-            index: index + 1,
-            isAnswered: false,
-            isGeneratingQuestion: true,
-          }) }
-        >
-          Next
-        </button>
+        {isAnswered && (
+          <button
+            type="button"
+            data-testid="btn-next"
+            onClick={ () => this.setState({
+              index: index + 1,
+              isAnswered: false,
+              isGeneratingQuestion: true,
+            }) }
+          >
+            Next
+          </button>
+        )}
       </div>
     );
   }

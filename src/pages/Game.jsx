@@ -15,11 +15,26 @@ class Game extends Component {
       isAnswered: false,
       isGeneratingQuestion: true,
       randomNumber: 0,
+      time: 30,
+      intervalID: 0,
+      allOptionsDisabled: false,
     };
   }
 
   componentDidMount() {
     this.getToken();
+  }
+
+  stopCounter = (counter) => {
+    clearInterval(counter);
+  }
+
+  counter = () => {
+    const oneSecond = 1000;
+    const intervalID = setInterval(() => {
+      this.setState((prevState) => ({ time: prevState.time - 1 }));
+    }, oneSecond);
+    this.setState({ intervalID });
   }
 
   getToken = async () => {
@@ -30,7 +45,8 @@ class Game extends Component {
   }
 
   answerQuestion = (answer, difficulty) => {
-    // const { timer } = this.state;
+    const { intervalID, time } = this.state;
+    clearInterval(intervalID);
     const { addNewScore } = this.props;
     const maxPoint = 3;
     const tenOfTrybe = 10;
@@ -48,13 +64,13 @@ class Game extends Component {
     };
     let score = 0;
     if (answer === 'right') {
-      score = tenOfTrybe + (1 * difficultyScore());
+      score = tenOfTrybe + (time * difficultyScore());
     }
     this.setState({ isAnswered: true }, () => addNewScore(score));
   }
 
   createOptions = (correct, incorrectList, number, difficulty) => {
-    const { isAnswered } = this.state;
+    const { isAnswered, allOptionsDisabled } = this.state;
     const array = [...incorrectList];
     array.splice(number, 0, correct);
     let i = 0;
@@ -65,6 +81,7 @@ class Game extends Component {
             return (
               <button
                 key={ element }
+                disabled={ allOptionsDisabled }
                 type="button"
                 data-testid="correct-answer"
                 className={ isAnswered ? 'correct-answer' : '' }
@@ -78,6 +95,7 @@ class Game extends Component {
           return (
             <button
               key={ element }
+              disabled={ allOptionsDisabled }
               type="button"
               data-testid={ `wrong-answer-${i}` }
               className={ isAnswered ? 'wrong-answer' : '' }
@@ -109,6 +127,7 @@ class Game extends Component {
     const { isGeneratingQuestion, randomNumber, isAnswered } = this.state;
     if (isGeneratingQuestion) {
       this.generateRandomNumber(objQuestion);
+      this.setState({ time: 30 }, () => this.counter());
     }
     return (
       <div key={ `Pergunta ${index + 1}` }>
@@ -128,6 +147,8 @@ class Game extends Component {
               index: index + 1,
               isAnswered: false,
               isGeneratingQuestion: true,
+              allOptionsDisabled: false,
+              time: 30,
             }) }
           >
             Next
@@ -138,11 +159,21 @@ class Game extends Component {
   }
 
   render() {
-    const { questions, index } = this.state;
+    const { questions, index, time, intervalID, isAnswered } = this.state;
+
+    if (time === 0) {
+      clearInterval(intervalID);
+    }
+
     return (
       <div>
         <Header />
         {questions && this.createQuestion(questions[index], index)}
+        { time === 0 && isAnswered === false
+          ? this.setState({
+            isAnswered: true,
+            allOptionsDisabled: true,
+          }) : <p>{ time }</p> }
       </div>
     );
   }

@@ -3,6 +3,7 @@ import md5 from 'crypto-js/md5';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import { resetScore } from '../actions';
 
 class Feedback extends Component {
   componentDidMount() {
@@ -44,7 +45,7 @@ class Feedback extends Component {
   }
 
   render() {
-    const { scorePoints, correctAmount, history } = this.props;
+    const { scorePoints, correctAmount, history, resetScorePoints } = this.props;
     return (
       <div>
         <Header />
@@ -54,6 +55,7 @@ class Feedback extends Component {
           data-testid="btn-ranking"
           type="button"
           onClick={ () => {
+            resetScorePoints();
             history.push('/ranking');
           } }
         >
@@ -80,9 +82,14 @@ const mapStateToProps = (state) => ({
   correctAmount: state.player.assertions,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  resetScorePoints: () => dispatch(resetScore()),
+});
+
 Feedback.propTypes = {
   scorePoints: propTypes.number,
   correctAmount: propTypes.number,
+  resetScorePoints: propTypes.func,
 }.isRequired;
 
-export default connect(mapStateToProps, null)(Feedback);
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);

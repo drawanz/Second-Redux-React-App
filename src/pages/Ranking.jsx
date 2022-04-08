@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import { resetScore } from '../actions';
 
 class Ranking extends Component {
   createRanking = () => {
@@ -27,7 +28,7 @@ class Ranking extends Component {
   }
 
   render() {
-    const { history } = this.props;
+    const { history, resetScorePoints } = this.props;
     return (
       <div>
         <h2 data-testid="ranking-title">Ranking</h2>
@@ -36,6 +37,7 @@ class Ranking extends Component {
           data-testid="btn-go-home"
           type="button"
           onClick={ () => {
+            resetScorePoints();
             history.push('/');
           } }
         >
@@ -51,9 +53,14 @@ const mapStateToProps = (state) => ({
   correctAmount: state.player.assertions,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  resetScorePoints: () => dispatch(resetScore()),
+});
+
 Ranking.propTypes = {
   scorePoints: propTypes.number,
   correctAmount: propTypes.number,
+  resetScorePoints: propTypes.func,
 }.isRequired;
 
-export default connect(mapStateToProps, null)(Ranking);
+export default connect(mapStateToProps, mapDispatchToProps)(Ranking);

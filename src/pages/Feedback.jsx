@@ -1,9 +1,29 @@
 import React, { Component } from 'react';
+import md5 from 'crypto-js/md5';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 
 class Feedback extends Component {
+  componentDidMount() {
+    const { email, name, scorePoints } = this.props;
+    const hash = md5(email).toString();
+    const gravatarURL = `https://www.gravatar.com/avatar/${hash}`;
+    const oldRanking = localStorage.getItem('ranking');
+    if (oldRanking === null) {
+      localStorage.setItem('ranking', JSON.stringify([{
+        name,
+        score: scorePoints,
+        picture: gravatarURL }]));
+    } else {
+      const newRanking = [...JSON.parse(oldRanking), {
+        name,
+        score: scorePoints,
+        picture: gravatarURL }];
+      localStorage.setItem('ranking', JSON.stringify(newRanking));
+    }
+  }
+
   checkMessage = (numberOfCorrects) => {
     const correctLimit = 3;
     if (numberOfCorrects >= correctLimit) {
@@ -54,6 +74,8 @@ class Feedback extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  email: state.player.gravatarEmail,
+  name: state.player.name,
   scorePoints: state.player.score,
   correctAmount: state.player.assertions,
 });

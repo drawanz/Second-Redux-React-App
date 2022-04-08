@@ -5,9 +5,7 @@ export const SAVE_NAME_AND_EMAIL = 'SAVE_NAME_AND_EMAIL';
 
 export const ADD_SCORE = 'ADD_SCORE';
 
-// export const GET_QUESTION = 'GET_QUESTION';
-
-// export const GET_QUESTION_SUCESS = 'GET_QUESTION_SUCESS';
+export const RESET_SCORE = 'RESET_SCORE';
 
 export const actionGetToken = () => ({ type: GET_TOKEN });
 
@@ -15,12 +13,7 @@ export const actionGetTokenSucess = (token) => ({ type: GET_TOKEN_SUCESS, token 
 
 export const addScore = (score, correct) => ({ type: ADD_SCORE, score, correct });
 
-// export const actionGetQuestion = () => ({ type: GET_QUESTION });
-
-// export const actionGetQuestionSucess = (question) => ({
-//   type: GET_QUESTION_SUCESS,
-//   question,
-// });
+export const resetScore = () => ({ type: RESET_SCORE });
 
 export const thunkGetToken = () => async (dispatch) => {
   dispatch(actionGetToken());
@@ -40,10 +33,3 @@ export const saveNameAndEmail = (name, email) => ({
   name,
   email,
 });
-
-// export const thunkGetQuestion = (token) => async (dispatch) => {
-//   dispatch(actionGetQuestion());
-//   const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
-//   const question = await response.json();
-//   dispatch(actionGetQuestionSucess(question.results));
-// };

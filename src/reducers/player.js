@@ -2,7 +2,7 @@ import { SAVE_NAME_AND_EMAIL, ADD_SCORE } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
-  assertions: '',
+  assertions: 0,
   score: 0,
   gravatarEmail: '',
 };
@@ -19,6 +19,7 @@ const player = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       score: state.score + action.score,
+      assertions: state.assertions + action.correct,
     };
   default:
     return state;

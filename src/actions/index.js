@@ -13,7 +13,7 @@ export const actionGetToken = () => ({ type: GET_TOKEN });
 
 export const actionGetTokenSucess = (token) => ({ type: GET_TOKEN_SUCESS, token });
 
-export const addScore = (score) => ({ type: ADD_SCORE, score });
+export const addScore = (score, correct) => ({ type: ADD_SCORE, score, correct });
 
 // export const actionGetQuestion = () => ({ type: GET_QUESTION });
 

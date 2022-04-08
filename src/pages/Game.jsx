@@ -66,7 +66,11 @@ class Game extends Component {
     if (answer === 'right') {
       score = tenOfTrybe + (time * difficultyScore());
     }
-    this.setState({ isAnswered: true }, () => addNewScore(score));
+    if (score === 0) {
+      this.setState({ isAnswered: true }, () => addNewScore(score, 0));
+    } if (score > 0) {
+      this.setState({ isAnswered: true }, () => addNewScore(score, 1));
+    }
   }
 
   createOptions = (correct, incorrectList, number, difficulty) => {
@@ -190,7 +194,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addNewScore: (score) => dispatch(addScore(score)),
+  addNewScore: (score, correct) => dispatch(addScore(score, correct)),
 });
 
 Game.propTypes = {

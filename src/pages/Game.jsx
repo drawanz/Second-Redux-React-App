@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import { BiTimer } from 'react-icons/bi';
 import Header from '../components/Header';
 import { addScore } from '../actions';
-import './Game.css';
+import styles from './Game.module.css';
+import Footer from '../components/Footer';
 
 class Game extends Component {
   constructor() {
@@ -88,7 +90,7 @@ class Game extends Component {
                 disabled={ allOptionsDisabled }
                 type="button"
                 data-testid="correct-answer"
-                className={ isAnswered ? 'correct-answer' : '' }
+                className={ isAnswered ? styles.CorrectAnswer : styles.Buttons }
                 onClick={ () => this.answerQuestion('right', difficulty) }
               >
                 { element }
@@ -102,7 +104,7 @@ class Game extends Component {
               disabled={ allOptionsDisabled }
               type="button"
               data-testid={ `wrong-answer-${i}` }
-              className={ isAnswered ? 'wrong-answer' : '' }
+              className={ isAnswered ? styles.WrongAnswer : styles.Buttons }
               onClick={ () => this.answerQuestion('wrong', difficulty) }
             >
               { element }
@@ -128,7 +130,7 @@ class Game extends Component {
   }
 
   createQuestion = (objQuestion, index) => {
-    const { isGeneratingQuestion, randomNumber, isAnswered } = this.state;
+    const { isGeneratingQuestion, randomNumber, isAnswered, time } = this.state;
     const { history } = this.props;
     const maxIndex = 4;
     if (index > maxIndex) {
@@ -139,17 +141,35 @@ class Game extends Component {
         this.setState({ time: 30 }, () => this.counter());
       }
       return (
-        <div key={ `Pergunta ${index + 1}` }>
-          <h4 data-testid="question-category">{ objQuestion.category }</h4>
-          <p data-testid="question-text">{ objQuestion.question }</p>
+        <div className={ styles.QuestionContainer } key={ `Pergunta ${index + 1}` }>
+          <h2 data-testid="question-category">{ objQuestion.category }</h2>
+          <p
+            className={ styles.Question }
+            data-testid="question-text"
+          >
+            { objQuestion.question }
+          </p>
           {this.createOptions(
             objQuestion.correct_answer,
             objQuestion.incorrect_answers,
             randomNumber,
             objQuestion.difficulty,
           )}
+          { time === 0 && isAnswered === false
+            ? this.setState({
+              isAnswered: true,
+              allOptionsDisabled: true,
+            }) : (
+              <p className={ styles.Time }>
+                { time }
+                <span>
+                  <BiTimer />
+                </span>
+              </p>
+            ) }
           {isAnswered && (
             <button
+              className={ styles.Next }
               type="button"
               data-testid="btn-next"
               onClick={ () => this.setState({
@@ -169,21 +189,17 @@ class Game extends Component {
   }
 
   render() {
-    const { questions, index, time, intervalID, isAnswered } = this.state;
+    const { questions, index, time, intervalID } = this.state;
 
     if (time === 0) {
       clearInterval(intervalID);
     }
 
     return (
-      <div>
+      <div className={ styles.Page }>
         <Header />
         {questions && this.createQuestion(questions[index], index)}
-        { time === 0 && isAnswered === false
-          ? this.setState({
-            isAnswered: true,
-            allOptionsDisabled: true,
-          }) : <p>{ time }</p> }
+        <Footer />
       </div>
     );
   }

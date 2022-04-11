@@ -1,0 +1,96 @@
+.Container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 100px;
+  text-align: center;
+  width: 100%;
+}
+
+.RankingContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 120px;
+  text-align: center;
+  width: 100%;
+}
+
+.ListContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  list-style: none;
+  text-align: center;
+  width: 100%;
+}
+
+.EachRank {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
+}
+
+.EachRank:nth-child( 2n+1 ) {
+  background-color: var(--secondary-color);
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.EachRank:nth-child( 2n ) {
+  background-color: #f2f2f2;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.EachRank:nth-child( 1 ) {
+  background-color: gold;
+  border-radius: 10px 10px 0 0;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.EachRank:nth-child( 2 ) {
+  background-color: silver;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.EachRank:nth-child( 3 ) {
+  background-color: #cd7f32;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.Words {
+  font-size: 20px;
+}
+
+.Imgs {
+  border-radius: 50%;
+}
+
+.BtnPlayAgain {
+  align-items: center;
+  background: var(--tertiary-color);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+  color: var(--main-color);
+  cursor: pointer;
+  display: flex;
+  flex-flow: column wrap;
+  font-size: 20px;
+  font-weight: 600;
+  height: 40px;
+  justify-content: center;
+  margin-top: 24px;
+  padding: 0.8rem 1.6rem;
+  transition: 0.1s;
+  width: 180px;
+}

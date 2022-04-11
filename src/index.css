@@ -1,3 +1,16 @@
+:root {
+  --primary-color: #171738;
+  --secondary-color: #fcfffc;
+  --tertiary-color: #3185FC;
+  --accent-color: #34E5FF;
+  --black: #040f0f;
+  --radius: 10px;
+}
+
+#root {
+  height: 100vh;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +23,16 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3 {
+  margin-bottom: 24px;
 }

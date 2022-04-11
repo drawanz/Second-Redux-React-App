@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import { BsFillGearFill } from 'react-icons/bs';
 import { saveNameAndEmail, thunkGetToken } from '../actions';
+import styles from './FormLogin.module.css';
 
 class FormLogin extends Component {
   constructor() {
@@ -55,37 +57,45 @@ class FormLogin extends Component {
   render() {
     const { isDisabled } = this.state;
     return (
-      <form>
-        <input
-          type="name"
-          data-testid="input-player-name"
-          name="name"
-          onChange={ this.changeForm }
-          placeholder="Nome"
-        />
-        <input
-          type="email"
-          data-testid="input-gravatar-email"
-          name="email"
-          onChange={ this.changeForm }
-          placeholder="Email"
-        />
-        <button
-          type="button"
-          data-testid="btn-play"
-          disabled={ isDisabled }
-          onClick={ this.saveTokenAndExit }
-        >
-          Play
-        </button>
-        <button
-          type="button"
-          data-testid="btn-settings"
-          onClick={ this.goToConfig }
-        >
-          Configurações
-        </button>
-      </form>
+      <div className={ styles.container }>
+        <form className={ styles.wrapper }>
+          <h1>Entrar</h1>
+          <input
+            type="name"
+            data-testid="input-player-name"
+            name="name"
+            onChange={ this.changeForm }
+            placeholder="Nome"
+          />
+          <input
+            type="email"
+            data-testid="input-gravatar-email"
+            name="email"
+            onChange={ this.changeForm }
+            placeholder="Email"
+          />
+          <div className={ styles.btnContainer }>
+            <button
+              className={ styles.playButton }
+              type="button"
+              data-testid="btn-play"
+              disabled={ isDisabled }
+              onClick={ this.saveTokenAndExit }
+            >
+              Play
+            </button>
+            <button
+              className={ styles.confButton }
+              type="button"
+              data-testid="btn-settings"
+              onClick={ this.goToConfig }
+            >
+              <BsFillGearFill />
+            </button>
+
+          </div>
+        </form>
+      </div>
     );
   }
 }

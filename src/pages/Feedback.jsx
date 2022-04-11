@@ -4,6 +4,8 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { resetScore } from '../actions';
+import styles from './Feedback.module.css';
+import Footer from '../components/Footer';
 
 class Feedback extends Component {
   componentDidMount() {
@@ -37,9 +39,9 @@ class Feedback extends Component {
     localStorage.setItem('score', score);
     localStorage.setItem('assertions', numberOfCorrects);
     return (
-      <div>
-        <p data-testid="feedback-total-score">{score}</p>
-        <p data-testid="feedback-total-question">{numberOfCorrects}</p>
+      <div className={ styles.Score }>
+        <p data-testid="feedback-total-score">{`Pontuação: ${score}`}</p>
+        <p data-testid="feedback-total-question">{`Acertos: ${numberOfCorrects}`}</p>
       </div>
     );
   }
@@ -47,29 +49,34 @@ class Feedback extends Component {
   render() {
     const { scorePoints, correctAmount, history, resetScorePoints } = this.props;
     return (
-      <div>
+      <div className={ styles.Container }>
         <Header />
-        <h2 data-testid="feedback-text">{this.checkMessage(correctAmount)}</h2>
+        <h1 data-testid="feedback-text">{this.checkMessage(correctAmount)}</h1>
         {this.createScoreBoard(scorePoints, correctAmount)}
-        <button
-          data-testid="btn-ranking"
-          type="button"
-          onClick={ () => {
-            resetScorePoints();
-            history.push('/ranking');
-          } }
-        >
-          Ranking
-        </button>
-        <button
-          data-testid="btn-play-again"
-          type="button"
-          onClick={ () => {
-            history.push('/');
-          } }
-        >
-          Play Again
-        </button>
+        <div className={ styles.ButtonsDiv }>
+          <button
+            className={ styles.ButtonFeedback }
+            data-testid="btn-ranking"
+            type="button"
+            onClick={ () => {
+              resetScorePoints();
+              history.push('/ranking');
+            } }
+          >
+            Ranking
+          </button>
+          <button
+            className={ styles.ButtonFeedback }
+            data-testid="btn-play-again"
+            type="button"
+            onClick={ () => {
+              history.push('/');
+            } }
+          >
+            Play Again
+          </button>
+        </div>
+        <Footer />
       </div>
     );
   }

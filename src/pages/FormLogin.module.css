@@ -1,0 +1,69 @@
+.container {
+  align-items: center;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100%;
+}
+
+.wrapper {
+  align-items: center;
+  border-radius: var(--radius);
+  display: flex;
+  flex-flow: column nowrap;
+  height: 350px;
+  justify-content: center;
+  width: 300px;
+}
+
+.wrapper input {
+  background-color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+  color: var(--black);
+  font-size: 16px;
+  margin-bottom: 12px;
+  outline: none;
+  padding: 8px 0;
+  text-align: center;
+}
+
+.playButton {
+  background: var(--accent-color);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+  color: var(--black);
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  transition: 0.1s;
+}
+
+.playButton:active {
+  box-shadow: 0 4px 4px var(--black);
+}
+
+
+.confButton {
+  background: var(--primary-color);
+  border: none;
+  border-radius: var(--radius);
+  color: var(--main-color);
+  cursor: pointer;
+  font-size: 24px;
+  padding: 0.6rem 1.2rem;
+  transition: 0.1s;
+}
+
+.btnContainer {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  padding-left: 60px;
+}

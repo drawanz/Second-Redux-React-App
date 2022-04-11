@@ -1,0 +1,36 @@
+.Container {
+  align-items: center;
+  background-color: var(--tertiary-color);
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 1.1rem;
+  font-weight: 600;
+  height: 80px;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.ImgContainer {
+  align-items: center;
+  display: flex;
+  height: 80;
+  justify-content: center;
+  width: 150px;
+}
+
+.GravatarImg {
+  border-radius: 50%;
+  padding-right: 4px;
+}
+
+.Logo {
+  width: 150px;
+}
+
+.Score {
+  text-align: center;
+  width: 150px;
+}

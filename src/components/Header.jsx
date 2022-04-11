@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import logo from '../trivia.png';
 import '../App.css';
+import styles from './Header.module.css';
 
 class Header extends Component {
   render() {
@@ -11,16 +12,19 @@ class Header extends Component {
     const hash = md5(email).toString();
     const gravatarURL = `https://www.gravatar.com/avatar/${hash}`;
     return (
-      <header className="App-header">
-        <img
-          src={ gravatarURL }
-          alt="Avatar"
-          data-testid="header-profile-picture"
-        />
-        <p data-testid="header-player-name">{ name }</p>
-        <img id="logo" src={ logo } className="App-logo" alt="logo" />
-        <p data-testid="header-score">
-          {score}
+      <header className={ styles.Container }>
+        <div className={ styles.ImgContainer }>
+          <img
+            className={ styles.GravatarImg }
+            src={ gravatarURL }
+            alt="Avatar"
+            data-testid="header-profile-picture"
+          />
+          <p data-testid="header-player-name">{ name }</p>
+        </div>
+        <img id="logo" src={ logo } className={ styles.Logo } alt="logo" />
+        <p className={ styles.Score } data-testid="header-score">
+          {`Pontuação: ${score}`}
         </p>
       </header>
     );
